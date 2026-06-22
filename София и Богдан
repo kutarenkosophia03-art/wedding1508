@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Свадьба Софии и Богдана</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:Montserrat,sans-serif;
+background:#ffdbe7;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+.section{
+padding:80px 20px;
+text-align:center;
+position:relative;
+}
+
+.pink{
+background:#ffdbe7;
+background-image:radial-gradient(white 2px, transparent 2px);
+background-size:35px 35px;
+}
+
+.milk{
+background:#fff8f2;
+background-image:radial-gradient(#ffc8d8 2px, transparent 2px);
+background-size:35px 35px;
+}
+
+h1{
+font-family:'Great Vibes';
+font-size:65px;
+}
+
+h2{
+font-family:'Great Vibes';
+font-size:45px;
+color:#ff7da3;
+}
+
+p{
+max-width:850px;
+margin:auto;
+line-height:1.8;
+}
+
+#envelopeScreen{
+position:fixed;
+width:100%;
+height:100vh;
+background:#ffdbe7;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+cursor:pointer;
+}
+
+.envelope{
+width:250px;
+height:170px;
+background:white;
+position:relative;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.envelope:before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:125px solid transparent;
+border-right:125px solid transparent;
+border-top:85px solid #ffc7d8;
+}
+
+.cards{
+display:flex;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+margin-bottom:50px;
+}
+
+.flip-card{
+width:260px;
+height:350px;
+perspective:1000px;
+cursor:pointer;
+}
+
+.flip-inner{
+position:relative;
+width:100%;
+height:100%;
+transition:transform .8s;
+transform-style:preserve-3d;
+}
+
+.flip-card.active .flip-inner{
+transform:rotateY(180deg);
+}
+
+.flip-front,.flip-back{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:25px;
+backface-visibility:hidden;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+}
+
+.flip-front{
+color:white;
+font-size:90px;
+}
+
+.pink-card{background:#ffb8c9;}
+.blue-card{background:#bddcff;}
+
+.flip-back{
+transform:rotateY(180deg);
+background:white;
+}
+
+.flip-back img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.bubble{
+position:absolute;
+bottom:20px;
+background:white;
+padding:12px 18px;
+border-radius:30px;
+font-size:14px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+button{
+padding:16px 35px;
+border:none;
+border-radius:40px;
+background:#ff7da3;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:25px;
+}
+
+.tear{
+height:120px;
+background:linear-gradient(to bottom,#ffdbe7,#fff8f2);
+clip-path:polygon(0 0,100% 0,100% 50%,95% 70%,90% 35%,85% 75%,80% 35%,75% 75%,70% 35%,65% 75%,60% 35%,55% 75%,50% 35%,45% 75%,40% 35%,35% 75%,30% 35%,25% 75%,20% 35%,15% 75%,10% 35%,5% 75%,0 50%);
+}
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,60px);
+gap:10px;
+justify-content:center;
+margin:40px 0;
+}
+
+.day{
+width:60px;
+height:60px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:15px;
+}
+
+.heart{
+background:#ff7da3;
+color:white;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+50%{transform:scale(1.2);}
+}
+
+.polaroids{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.polaroids img{
+width:240px;
+padding:10px 10px 40px;
+background:white;
+box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+.timeline{
+display:flex;
+flex-direction:column;
+gap:35px;
+font-size:28px;
+}
+
+.colors{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+margin:30px 0;
+}
+
+.color{
+padding:14px 20px;
+background:white;
+border-radius:20px;
+}
+
+.carousel{
+display:flex;
+overflow-x:auto;
+gap:20px;
+padding:20px;
+scroll-snap-type:x mandatory;
+}
+
+.carousel img{
+width:220px;
+border-radius:20px;
+scroll-snap-align:center;
+}
+
+.request-box{
+background:#ffc8d8;
+padding:35px;
+border-radius:30px;
+max-width:900px;
+margin:20px auto;
+border:3px dashed white;
+}
+
+.final{
+background:url('final-photo.jpg') center/cover;
+color:white;
+position:relative;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.final::before{
+content:'';
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.4);
+}
+
+.final-content{
+position:relative;
+z-index:2;
+}
+
+#countdown{
+font-size:35px;
+margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<div id="envelopeScreen">
+<div class="envelope"></div>
+</div>
+
+<audio id="music" src="music.mp3"></audio>
+
+<section class="section pink">
+<div class="cards">
+
+<div class="flip-card" onclick="flip(this)">
+<div class="flip-inner">
+<div class="flip-front pink-card">
+?
+<div style="font-size:18px;">нажмите, чтобы узнать</div>
+</div>
+<div class="flip-back">
+<img src="groom-child.jpg">
+<div class="bubble">«Кто будет моей женой?»</div>
+</div>
+</div>
+</div>
+
+<div class="flip-card" onclick="flip(this)">
+<div class="flip-inner">
+<div class="flip-front blue-card">
+?
+<div style="font-size:18px;">нажмите, чтобы узнать</div>
+</div>
+<div class="flip-back">
+<img src="bride-child.jpg">
+<div class="bubble">«Я буду»</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<p>Приглашаем Вас</p>
+<h1>на нашу свадьбу</h1>
+
+<button onclick="playMusic()">Включить музыку</button>
+</section>
+
+<div class="tear"></div>
+
+<section class="section milk">
+<h1>Узнали этих малышей?</h1>
+<h2>Да-да, это мы!</h2>
+
+<p>
+Время пролетело так быстро, представляете? Мы повзрослели, нашли друг друга и уже сегодня мы хотим сообщить вам радостную новость - мы женимся!
+</p>
+
+<div class="calendar" id="calendar"></div>
+
+<p>
+Этот день станет началом нашей долгой и счастливой семейной жизни.
+</p>
+
+<div class="polaroids">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+</div>
+</section>
+
+<div class="tear"></div>
+
+<section class="section pink">
+<h1>Место проведения</h1>
+
+<p>Наше свадебное торжество пройдет в банкетном зале "The village"</p>
+<p>г. Новоолександровка, ул. Сурская, 139а</p>
+
+<a href="https://maps.google.com" target="_blank"><button>как добраться?</button></a>
+<a href="https://weather.com/" target="_blank"><button>Погода в этот день</button></a>
+</section>
+
+<div class="tear"></div>
+
+<section class="section milk">
+<div class="timeline">
+<div>13:30 сбор гостей</div>
+<div>14:00 начало церемонии</div>
+<div>16:00 начало банкета</div>
+<div>20:00 Тортик</div>
+<div>22:00 конец вечера</div>
+</div>
+</section>
+
+<div class="tear"></div>
+
+<section class="section pink">
+<h1>Дресскод</h1>
+
+<p>
+Мы очень старались сделать праздник красивым и будем рады, если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы.
+</p>
+
+<div class="colors">
+<div class="color">Молочный</div>
+<div class="color">светло серый</div>
+<div class="color">серый</div>
+<div class="color">голубой</div>
+<div class="color">синий</div>
+<div class="color">изумрудный</div>
+<div class="color">шоколадный</div>
+<div class="color">бордовый</div>
+<div class="color">баклажановый</div>
+<div class="color">бежевый</div>
+<div class="color">сереневый</div>
+<div class="color">светло розовые</div>
+<div class="color">цвет сливочного масла</div>
+</div>
+
+<p>БУДЕМ РАДЫ, ЕСЛИ ДЕВУШКИ ВЫБЕРУТ НАРЯДЫ ПАСТЕЛЬНЫХ, Приглушенный или глубоких ОТТЕНКОВ</p>
+
+<div class="carousel">
+<img src="girls1.jpg">
+<img src="girls2.jpg">
+<img src="girls3.jpg">
+</div>
+
+<p>для вдохновения</p>
+
+<p>
+ДЛЯ МУЖЧИН БУДЕТ УМЕСТНА ОДЕЖДА
+СВЕТЛЫХ или темных, но спокойных ОТТЕНКОВ
+</p>
+
+<div class="carousel">
+<img src="men1.jpg">
+<img src="men2.jpg">
+<img src="men3.jpg">
+</div>
+
+<p>для вдохновения</p>
+</section>
+
+<section class="section milk">
+<h2>несколько просьб:</h2>
+
+<div class="request-box">
+Дорогие гости!
+Ваше присутствие на нашем празднике — самый ценный подарок для нас.
+Чтобы наши руки были свободны для объятий, а не заняты громоздкими подарками, будем рады лёгким подаркам в конвертах.
+</div>
+
+<div class="request-box">
+Также просим вас не дарить нам цветы — в праздничной суете мы, к сожалению, не успеем насладиться их красотой в полной мере.
+Вместо букета мы будем рады получить бутылочку вашего любимого напитка. Пожалуйста, подпишите её небольшим пожеланием или поводом для открытия:
+«На первую годовщину», «После первого семейного ремонта», «На рождение малыша», «После первой ссоры», «На исполнение мечты» — или придумайте свой особенный повод.
+Так вы поможете нам создать уникальную коллекцию воспоминаний и тёплых посланий, которую мы будем открывать в самые важные моменты нашей семейной жизни.
+</div>
+</section>
+
+<section class="final">
+<div class="final-content">
+<h1>С Любовью, София и Богдан</h1>
+<div id="countdown"></div>
+</div>
+</section>
+
+<script>
+document.getElementById("envelopeScreen").onclick=()=>{
+document.getElementById("envelopeScreen").style.display="none";
+};
+
+function flip(card){
+card.classList.toggle("active");
+}
+
+function playMusic(){
+document.getElementById("music").play();
+}
+
+const calendar=document.getElementById("calendar");
+for(let i=1;i<=31;i++){
+let day=document.createElement("div");
+day.className="day";
+if(i===15) day.classList.add("heart");
+day.innerText=i;
+calendar.appendChild(day);
+}
+
+function countdown(){
+const wedding=new Date("2026-08-15T13:30:00").getTime();
+const now=new Date().getTime();
+const diff=wedding-now;
+
+const d=Math.floor(diff/(1000*60*60*24));
+const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+const m=Math.floor((diff%(1000*60*60))/(1000*60));
+const s=Math.floor((diff%(1000*60))/1000);
+
+document.getElementById("countdown").innerHTML=
+${d} дней ${h} часов ${m} минут ${s} секунд;
+}
+
+setInterval(countdown,1000);
+countdown();
+</script>
+
+</body>
+</html>
